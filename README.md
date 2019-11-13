@@ -4,14 +4,23 @@
 
 # 华为smproxy.jar包存在乱码问题：
 1、提交短信
+
 CMPP_Connect_REP----->AuthenticatorISMG
+
 CMPP_Submit_REP------>MsgId
+
 CMPP_Submit---------->msg_Content
+
 2、状态报告
+
 CMPP_Deliver--------->MsgId
+
 3、上行消息
+
 CMPP_Deliver--------->MsgId
+
 CMPP_Deliver--------->MsgContent
+
 解决办法通过调整底层源码AuthenticatorISMG、MsgId输出为HexString，MsgContent中文转码
 
 # 通过TypeConvert获取msgId
