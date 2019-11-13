@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <comm>
+    <not-init>Not initialized.</not-init>
+    <connecting>Connecting.</connecting>
+    <reconnecting>Reconnecting.</reconnecting>
+    <connected>Connected.</connected>
+    <heartbeating>Heartbeating.</heartbeating>
+    <receiveing>Receiveing.</receiveing>
+    <closeing>Closing.</closeing>
+    <closed>Closed.</closed>
+    <unknown-host>Unknown host(Invalid IP or can't determine IP from hostname)</unknown-host>
+    <port-error>Invalid port(not integer in 0~65535)</port-error>
+    <connect-refused>Connection refused.(Target port not in listening)</connect-refused>
+    <no-route>No route to target.(Address not exist, target computer not alive, route setting error, or physical line break)</no-route>
+    <receive-timeout>Receive timeout.(read-timeout parameter too short or target computer's heartbeat stoped)</receive-timeout>
+    <close-by-peer>Connection closed by peer.(Server closed our socket.)</close-by-peer>
+    <reset-by-peer>Connection reset by peer.(Server reset our socket, maybe server process abnormal terminated)</reset-by-peer>
+    <connection-closed>Connection already closed.</connection-closed>
+    <communication-error>Communication error.</communication-error>
+    <connect-error>Connect error, </connect-error>
+    <send-error>Send message error, </send-error>
+    <receive-error>Receive message error, </receive-error>
+    <close-error>Connection close error, </close-error>
+    <no-listener>No listener registed to handle event</no-listener>
+    <dispatch-message-fail>Message dispatch fail.</dispatch-message-fail>
+    <illegal-call>Illegal call.(Should not call this method)</illegal-call>
+  </comm>
+    <smproxy>
+    <logining>Logining</logining>
+    <login-error>Exception occurs while login,</login-error>
+    <send-error>The message is sent falsely.</send-error>
+
+  <connect-timeout>The login is unsuccessful.</connect-timeout>
+  <structure-error>The login is unsuccessful, because the structure of connection message is wrong.</structure-error>
+  <nonlicetsp-id>The login is unsuccessful, because SP_ID is nonlicet.</nonlicetsp-id>
+  <sp-error>The login is unsuccessful, because SP is wrong.</sp-error>
+  <version-error>The login is unsuccessful, because the version is higher.</version-error>
+  <other-error>The login is unsuccessful, other error.</other-error>
+    <heartbeat-abnormity>Heartbeat is abnormity(Beacause the heartbeat was sent time after time,but there was not return or the return value was unsuccessful).</heartbeat-abnormity>
+  <submit-input-error>The parameter of submit message is wrong</submit-input-error>
+  <connect-input-error>The parameter of login message is wrong</connect-input-error>
+  <cancel-input-error>The parameter of cancel message is wrong</cancel-input-error>
+  <query-input-error>The parameter of query mesaage is wrong</query-input-error>
+  <deliver-repinput-error>The parameter of response message for answering the deliver message sent by SMC is wrong</deliver-repinput-error>
+  <active-repinput-error>The parameter of response mesaage for answering the active message sent by SMC is wrong</active-repinput-error>
+  <smc-message-error>The message that is sent by SMC is wrong</smc-message-error>
+  <int-scope-error> less than 0 or larger than 255.</int-scope-error>
+  <string-length-great> length is larger than </string-length-great>
+  <string-null>  value is null.</string-null>
+  <value-error>  is unequal to 0 or 1</value-error>
+  <fee-usertype-error>the value of fee_UserType is less than 0 or larger than 3.</fee-usertype-error>
+  <registered-delivery-error>the value of registered_Delivery is less than 0 or larger than 2.</registered-delivery-error>
+  <pk-total-error>the value of pk_Total is less than 1 or larger than 255.</pk-total-error>
+  <pk-number-error>the value of pk_Number is less than 1 or larger than 255.</pk-number-error>
+   </smproxy>
+</config>

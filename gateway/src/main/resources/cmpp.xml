@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<!--与InfoX建立连接所需参数-->
+    <CMPPConnect>
+       <!-- InfoX主机地址,与移动签合同时移动所提供的地址 需修改 -->
+       <host>127.0.0.1</host>
+       <!-- InfoX主机端口号 cmpp2.0默认为7890,cmpp3.0为7891-->
+       <port>7890</port>
+       <!--(登录帐号SP…ID)与移动签合同时所提供的企业代码 6位  需修改-->
+       <source-addr>123456</source-addr>
+       <!--登录密码 默认为空 如有需修改 -->
+       <shared-secret>123456</shared-secret>
+       <!-- 心跳信息发送间隔时间(单位：秒) -->
+       <heartbeat-interval>30</heartbeat-interval>
+       <!-- 连接中断时重连间隔时间(单位：秒)-->
+       <reconnect-interval>30</reconnect-interval>
+       <!-- 需要重连时，连续发出心跳而没有接收到响应的个数（单位：个)-->
+       <heartbeat-noresponseout>5</heartbeat-noresponseout>
+       <!-- 操作超时时间(单位：秒) -->
+       <transaction-timeout>10</transaction-timeout>
+       <!--双方协商的版本号(大于0，小于256)-->
+       <version>33</version>
+       <!--是否属于调试状态,true表示属于调试状态，所有的消息被打印输出到屏幕，false表示不属于调试状态，所有的消息不被输出-->
+       <debug>true</debug>
+    </CMPPConnect>
+</config>
