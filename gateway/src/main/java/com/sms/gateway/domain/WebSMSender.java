@@ -52,15 +52,6 @@ public class WebSMSender extends SMProxy {
 		super(args);
 	}
 
-	public static String toString(String binary) {
-		String[] tempStr = binary.split(" ");
-		String s = "";
-		for (String str : tempStr) {
-			s += Character.toString((char) (Integer.parseInt(str, 2)));
-		}
-		return s;
-	}
-
 	@Override
 	public CMPPMessage onDeliver(CMPPDeliverMessage msg) {
 		byte[] msgId = msg.getMsgId();
