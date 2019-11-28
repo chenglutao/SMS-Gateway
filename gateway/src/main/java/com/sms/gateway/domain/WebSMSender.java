@@ -11,10 +11,12 @@ import com.sms.gateway.comm.cmpp.message.CMPPSubmitRepMessage;
 import com.sms.gateway.utils.Args;
 import com.sms.gateway.utils.TypeConvert;
 import com.sms.smproxy.SMProxy;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author chenglutao on 2019/10/25
  */
+@Slf4j
 public class WebSMSender extends SMProxy {
 
 	private int pkTotal = 1;// 相同msg_Id消息总条数,短短信这里是1
@@ -56,11 +58,11 @@ public class WebSMSender extends SMProxy {
 	public CMPPMessage onDeliver(CMPPDeliverMessage msg) {
 		byte[] msgId = msg.getMsgId();
 		String bytesToHexString = TypeConvert.bytesToHexString(msgId, msgId.length);
-		System.out.println("获取msgId" + bytesToHexString);
+		log.info("获取msgId------> {}", bytesToHexString);
 		int registeredDeliver = msg.getRegisteredDeliver();
 		if (registeredDeliver == 1) {// 短信状态报告
 			if (String.valueOf(msg.getStat()).equalsIgnoreCase("DELIVRD")) {
-				System.out.println("收到短信状态报告： " + msg.toString());
+				log.info("收到短信状态报告------> {}", msg.toString());
 				try {
 					return super.onDeliver(msg);
 				} catch (Exception ex) {
@@ -71,19 +73,19 @@ public class WebSMSender extends SMProxy {
 		if (registeredDeliver == 0) {// 短信上行消息
 			String moContent = null;
 			byte[] msgContent = msg.getMsgContent();
-			System.out.println("收到短信网关上行消息：" + msg.toString());
+			log.info("收到短信网关上行消息------> {}", msg.toString());
 			if (8 == msg.getMsgFmt() || 15 == msg.getMsgFmt()) {// 兼容普通文本输出
 				try {
 					moContent = new String(msgContent, "GBK");// 经测试 需要编码为GBk或GB2312
 				} catch (Exception e) {
-					System.out.println("解析普通文本出错了：" + e.getMessage());
+					log.info("解析普通文本出错了------> {}", e.getMessage());
 					return new CMPPDeliverRepMessage(msgId, 9);
 				}
 			} else {// 处理其他消息内容
 				msgContent = msg.getMsgContent();
 				moContent = new String(msgContent);
 			}
-			System.out.println("收到短信网关上行消息：" + moContent);
+			log.info("收到短信网关上行消息------> {}", moContent);
 		}
 		return super.onDeliver(msg);
 	}
@@ -106,14 +108,14 @@ public class WebSMSender extends SMProxy {
 				atTime, srcTerminalId, phone, msgContent, reserve);
 		CMPPSubmitRepMessage submitRepMessage = send(submitMessage);
 		if (submitRepMessage == null || submitRepMessage.getResult() != 0) {
-			System.out.println("发送短信失败");
+			log.info("发送短信失败");
 		}
 		// 短信发送成功
 		String msgId = TypeConvert.bytesToHexString(submitRepMessage.getMsgId(), submitRepMessage.getMsgId().length);
-		System.out.println("提交成功: " + msgId);
+		log.info("提交成功------> {}", msgId);
 	}
 
 	public void OnTerminate() {
-		System.out.println("Connection have been breaked! ");
+		log.info("Connection have been breaked! ");
 	}
 }
