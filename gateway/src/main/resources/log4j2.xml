@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="1200">
+
+    <Properties>
+        <Property name="log.dir">./logs</Property>
+        <Property name="log.name">sms-gateway</Property>
+        <Property name="log.level.console">all</Property>
+        <Property name="rolling.pattern">%d{yyyy-MM-dd}</Property>
+        <Property name="layout.pattern">%-5p %d [%t] %c{1} > %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console">
+            <PatternLayout pattern="${layout.pattern}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="rolling" fileName="${sys:log.dir}/${sys:log.name}.log" filePattern="${sys:log.dir}/${sys:log.name}.log.${rolling.pattern}">
+            <PatternLayout pattern="${layout.pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console" level="${sys:log.level.console}"/>
+            <AppenderRef ref="rolling"/>
+        </Root>
+        <Logger name="com.sms.gateway.domain" level="debug"/>
+    </Loggers>
+
+</Configuration>
