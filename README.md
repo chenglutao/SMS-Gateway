@@ -29,5 +29,3 @@ TypeConvert.bytesToHexString(msgId, msgId.length);
 # 中文转码问题
 经测试 需要编码为GBk或GB2312
 
-# 如有不明白的地方还请您添加我的微信号：clt928
-
