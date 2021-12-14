@@ -14,7 +14,7 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<junit.version>4.12</junit.version>
-		<log4j2.version>2.8.2</log4j2.version>
+		<log4j2.version>2.16.0</log4j2.version>
 		<lombok.version>1.18.10</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
