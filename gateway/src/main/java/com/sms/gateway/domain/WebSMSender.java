@@ -103,16 +103,50 @@ public class WebSMSender extends SMProxy {
 
 	public void CmppSmsSubmitClient(String[] phone, byte[] msgContent) {
 		validTime = new Date(System.currentTimeMillis() + 172800000);
-		CMPPSubmitMessage submitMessage = new CMPPSubmitMessage(pkTotal, pkNumber, registeredDelivery, msgLevel,
-				serviceId, feeUserType, feeTerminalId, tpPid, tpUdhi, msgFmt, msgSrc, feeType, feeCode, validTime,
-				atTime, srcTerminalId, phone, msgContent, reserve);
-		CMPPSubmitRepMessage submitRepMessage = send(submitMessage);
-		if (submitRepMessage == null || submitRepMessage.getResult() != 0) {
-			log.info("发送短信失败");
+		// 单条短短信内容最大70个汉字(140字节),超出时必须按长短信拆分为多条信息包发送,
+		// 否则网关/模拟器会返回result=4,且模拟器中获取到的消息内容为空
+		byte[][] contents;
+		try {
+			contents = splitMsgContent(msgContent);
+		} catch (Exception ex) {
+			log.info("拆分短信内容失败------> {}", ex.getMessage());
+			return;
+		}
+		int total = contents.length;// 相同msg_Id消息总条数
+		byte[] msgId = null;
+		for (int number = 1; number <= total; number++) {
+			CMPPSubmitMessage submitMessage = new CMPPSubmitMessage(total, number, registeredDelivery, msgLevel,
+					serviceId, feeUserType, feeTerminalId, tpPid, tpUdhi, msgFmt, msgSrc, feeType, feeCode,
+					validTime, atTime, srcTerminalId, phone, contents[number - 1], reserve);
+			CMPPSubmitRepMessage submitRepMessage = send(submitMessage);
+			if (submitRepMessage == null || submitRepMessage.getResult() != 0) {
+				log.info("发送短信失败, 第{}条, result={}", number,
+						submitRepMessage == null ? null : submitRepMessage.getResult());
+				return;
+			}
+			msgId = submitRepMessage.getMsgId();
 		}
 		// 短信发送成功
-		String msgId = TypeConvert.bytesToHexString(submitRepMessage.getMsgId(), submitRepMessage.getMsgId().length);
-		log.info("提交成功------> {}", msgId);
+		log.info("提交成功------> {}", TypeConvert.bytesToHexString(msgId, msgId.length));
+	}
+
+	/**
+	 * 短信内容超过单条短短信最大长度(70个汉字,140字节)时,按长短信规则拆分为多条信息包,
+	 * 每条信息包最大67个汉字(134字节),并按汉字边界拆分,避免截断GBK多字节字符
+	 */
+	private static byte[][] splitMsgContent(byte[] msgContent) throws Exception {
+		if (msgContent.length <= 140) {
+			return new byte[][] { msgContent };
+		}
+		String content = new String(msgContent, "GBK");
+		int total = (content.length() + 66) / 67;
+		byte[][] parts = new byte[total][];
+		for (int i = 0; i < total; i++) {
+			int start = i * 67;
+			int end = Math.min(start + 67, content.length());
+			parts[i] = content.substring(start, end).getBytes("GBK");
+		}
+		return parts;
 	}
 
 	public void OnTerminate() {
