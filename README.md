@@ -1,3 +1,5 @@
+
+
 # SMS-Gateway
 中国移动通信互联网短信网关接口协议CMPP2.0及模拟器
 本文用的是中国移动通信互联网短信网关接口协议CMPP2.0，参考华为smproxy.jar包并进行了一些问题的修复和封装。
@@ -27,5 +29,4 @@ CMPP_Deliver--------->MsgContent
 TypeConvert.bytesToHexString(msgId, msgId.length);
 
 # 中文转码问题
-经测试 需要编码为GBk或GB2312
-
+经测试 需要编码为GBK或GB2312
